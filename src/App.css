@@ -1,0 +1,402 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+
+
+
+
+
+/* 
+
+.app {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background: #0f766e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.profile-card {
+  background: #f0fdfa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: left;
+} */
+
+
+/* 
+
+/* App.css */
+/* 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom right, #e0f7fa, #e1bee7, #fff9c4);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+} */
+
+
+
+
+
+
+ /* App.css */
+/* 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #f3f4f6, #e0f7fa, #fce4ec);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input::placeholder {
+  color: #aaa;
+  text-align: center;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+} */
+/* App.css */
+/* 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input::placeholder {
+  color: #aaa;
+  text-align: left;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.border-t {
+  border-top-width: 1px;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+} */
+
+
+
+
+
+/* App.css */
+/* 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input::placeholder {
+  color: #aaa;
+  text-align: left;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.border-t {
+  border-top-width: 1px;
+}
+
+.pt-4 {
+  padding-top: 1rem;
+} */
+
+
+
+
+
+/* App.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #f3f4f6, #e0f7fa, #fce4ec);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input::placeholder {
+  color: #aaa;
+  text-align: center;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+/* Additional styles to match screenshot */
+.bg-gradient-to-br {
+  background: linear-gradient(to bottom right, #f0f4f8, #e1f5fe);
+}
+
+.shadow-2xl {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+.max-w-2xl {
+  max-width: 32rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.p-10 {
+  padding: 2.5rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
