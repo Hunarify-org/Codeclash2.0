@@ -1,20 +1,22 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
-import "./index.css"
+import "./index.css";
 import ProviderDashboard from "./ProviderDashboard";
 import UserDashboard from "./Userdashboard";
 
-function App() {
+function Home({ setView }) {
   const [input, setInput] = useState("");
   const [gig, setGig] = useState(null);
   const [isListening, setIsListening] = useState(false);
-  const [view, setView] = useState("main"); // 'main' | 'user' | 'provider'
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
       alert("Speech Recognition is not supported in this browser. Please use Chrome or Edge.");
     }
   }, []);
+
   const handleSubmit = async () => {
     const res = await fetch("http://localhost:5000/generate-gig", {
       method: "POST",
@@ -23,7 +25,9 @@ function App() {
     });
     const data = await res.json();
     setGig(data);
+    console.log(data);
   };
+
   const toggleVoiceInput = () => {
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!Recognition) return;
@@ -50,21 +54,19 @@ function App() {
       setIsListening(false);
     }
   };
-  if (view === "user") return <UserDashboard />;
-  if (view === "provider") return <ProviderDashboard />;
+
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-purple-100 flex justify-center items-center p-4">
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-300  to-purple-500 flex justify-center items-center p-4">
       <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-8 space-y-8 flex flex-col justify-center items-center text-center">
         {/* Header */}
         <div className="flex flex-col items-center gap-3">
-          <img src="/logo.png" alt="logo" className="h-14 drop-shadow" />
           <h1 className="text-4xl font-extrabold text-gray-800 tracking-tight">Hunarify</h1>
           <p className="text-base text-gray-600 max-w-md">
             Empowering Local Skills into Global Freelance Opportunities with Voice + AI
           </p>
           <button
             className="mt-3 bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition"
-            onClick={() => setView("provider")}
+            onClick={() => navigate("/provider")}
           >
             🏢 Go to Provider Dashboard
           </button>
@@ -120,9 +122,8 @@ function App() {
               </div>
             </div>
 
-            {/* Navigate to User Dashboard */}
             <button
-              onClick={() => setView("user")}
+              onClick={() => navigate("/user")}
               className="w-full max-w-md mt-4 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
             >
               Go to User Dashboard ➜
@@ -141,6 +142,16 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/user" element={<UserDashboard />} />
+      <Route path="/provider" element={<ProviderDashboard />} />
+    </Routes>
   );
 }
 
