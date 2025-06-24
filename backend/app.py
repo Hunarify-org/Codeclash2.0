@@ -139,7 +139,12 @@ import latex
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])  # ✅ Allow your frontend origin
+# CORS(app, origins=["http://localhost:5173"])  # ✅ Allow your frontend origin
+CORS(app, origins=[
+    "http://localhost:5173",
+    "https://codeclash2-0.vercel.app"
+])
+
 
 @app.route('/generate-gig', methods=['POST'])
 def generate_gig():
