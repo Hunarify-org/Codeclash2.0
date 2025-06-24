@@ -22,7 +22,7 @@ function Home() {
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch("http://localhost:5000/generate-gig", {
+      const res = await fetch("https://codeclash2-0-2.onrender.com/generate-gig", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
