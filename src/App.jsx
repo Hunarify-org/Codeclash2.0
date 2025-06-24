@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+
 import "./App.css";
 import "./index.css";
 import ProviderDashboard from "./ProviderDashboard";
 import UserDashboard from "./Userdashboard";
 
-function Home({ setView }) {
+function Home() {
   const [input, setInput] = useState("");
   const [gig, setGig] = useState(null);
   const [isListening, setIsListening] = useState(false);
+  const [view, setView] = useState("main"); // 'main' | 'user' | 'provider'
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,14 +21,19 @@ function Home({ setView }) {
   }, []);
 
   const handleSubmit = async () => {
-    const res = await fetch("http://localhost:5000/generate-gig", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input }),
-    });
-    const data = await res.json();
-    setGig(data);
-    console.log(data);
+    try {
+      const res = await fetch("http://localhost:5000/generate-gig", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ input }),
+      });
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const data = await res.json();
+      setGig(data);
+    } catch (error) {
+      console.error("Fetch error for generate-gig:", error);
+      alert("Failed to generate gig. Please check the server or try again.");
+    }
   };
 
   const toggleVoiceInput = () => {
@@ -55,11 +63,21 @@ function Home({ setView }) {
     }
   };
 
+  const shareOnWhatsApp = () => {
+    if (!gig) return;
+    const message = `Gig Title: ${gig.title}\nBio: ${gig.bio}\nTags: ${gig.tags.join(", ")}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  if (view === "user") return <UserDashboard />;
+  if (view === "provider") return <ProviderDashboard />;
+
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-300  to-purple-500 flex justify-center items-center p-4">
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-300 to-purple-500 flex justify-center items-center p-4">
       <div className="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-8 space-y-8 flex flex-col justify-center items-center text-center">
-        {/* Header */}
         <div className="flex flex-col items-center gap-3">
+          <img src="/logo.png" alt="Hunarify Logo" className="h-14 drop-shadow" />
           <h1 className="text-4xl font-extrabold text-gray-800 tracking-tight">Hunarify</h1>
           <p className="text-base text-gray-600 max-w-md">
             Empowering Local Skills into Global Freelance Opportunities with Voice + AI
@@ -71,10 +89,10 @@ function Home({ setView }) {
             🏢 Go to Provider Dashboard
           </button>
         </div>
-        {/* Input */}
+
         <div className="w-full flex flex-col items-center gap-4">
           <label className="block text-sm font-medium text-gray-700 w-full max-w-md text-left">
-            Describe your skill or work (in Hindi or local language)
+            Describe your skill (e.g., “Main CapCut se reels edit karta hoon”)
           </label>
           <div className="flex border border-gray-300 rounded-lg overflow-hidden shadow-sm w-full max-w-md focus-within:ring-2 focus-within:ring-blue-500">
             <input
@@ -101,36 +119,44 @@ function Home({ setView }) {
             Generate Gig
           </button>
         </div>
-        {/* Gig Result */}
+
         {gig && (
-          <>
-            <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition hover:shadow-xl">
-              <h2 className="font-bold text-xl text-gray-800 mb-2">🎯 Your AI-generated Gig:</h2>
-              <div className="text-left space-y-2">
-                <h3 className="font-semibold text-lg text-blue-700">{gig.title}</h3>
-                <p className="text-sm text-gray-700">{gig.bio}</p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {(gig.tags || []).map((tag, i) => (
-                    <span
-                      key={i}
-                      className="bg-blue-100 text-blue-700 px-3 py-1 text-xs rounded-full shadow-sm"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
+          <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition hover:shadow-xl">
+            <h2 className="font-bold text-xl text-gray-800 mb-2">🎯 Your AI-generated Gig:</h2>
+            <div className="text-left space-y-2">
+              <h3 className="font-semibold text-lg text-blue-700">{gig.title}</h3>
+              <p className="text-sm text-gray-700">{gig.bio}</p>
+              <p className="text-sm text-gray-700">📨 Proposal: {gig.proposal}</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {(gig.tags || []).map((tag, i) => (
+                  <span
+                    key={i}
+                    className="bg-blue-100 text-blue-700 px-3 py-1 text-xs rounded-full shadow-sm"
+                  >
+                    #{tag}
+                  </span>
+                ))}
               </div>
             </div>
 
             <button
-              onClick={() => navigate("/user")}
-              className="w-full max-w-md mt-4 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+              onClick={shareOnWhatsApp}
+              className="w-full mt-4 bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition"
             >
-              Go to User Dashboard ➜
+              📲 Share Job on WhatsApp
             </button>
-          </>
+          </div>
         )}
-        {/* Key Features */}
+
+        {gig && (
+          <button
+            onClick={() => setView("user")}
+            className="w-full max-w-md mt-4 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+          >
+            Go to User Dashboard ➜
+          </button>
+        )}
+
         <div className="w-full max-w-md text-sm text-gray-600 border-t pt-6 text-center space-y-3">
           <h3 className="font-semibold text-gray-800 text-base">✨ Key Features</h3>
           <div className="grid grid-cols-2 gap-3 text-sm text-gray-700">
