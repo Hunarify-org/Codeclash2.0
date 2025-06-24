@@ -133,42 +133,33 @@
 
 
 
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import latex
 import os
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])  # ✅ Allow your frontend origin
 
+@app.route('/generate-gig', methods=['POST'])
+def generate_gig():
+    input_text = request.json.get("input", "")
 
-def _add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'  # ✅ Match your frontend
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    response.headers['Access-Control-Max-Age'] = '86400'
-    return response
-
-@app.route('/generate-gig', methods=['POST', 'OPTIONS'])
-def generate_gig(input_text):
-    if request.method == 'OPTIONS':
-        return _add_cors_headers(jsonify({'message': 'CORS preflight'})), 200
-
-
-        gig = {
-            "name": "Hunar Freelancer",
-            "title": "Trendy Reels Editor for Instagram and YouTube Shorts",
-            "bio": "I create viral and aesthetic reels with transitions, sync, and captions.",
-            "proposal": "Hi, I’d love to edit your reels! I’ll deliver fast and trendy content to grow your page.",
-            "tags": ["Video Editing", "Reels", "CapCut"]
-        }
-    elif "mehndi" in input_text:
+    if "mehndi" in input_text.lower():
         gig = {
             "name": "Hunar Freelancer",
             "title": "Mehndi Design for Weddings and Festivals",
             "bio": "I create intricate and custom mehndi designs for brides and special occasions.",
             "proposal": "Contact me for custom mehndi designs tailored to your event!",
             "tags": ["Mehndi Design", "Henna Art", "Weddings"]
+        }
+    elif "edit" in input_text.lower():
+        gig = {
+            "name": "Hunar Freelancer",
+            "title": "Trendy Reels Editor for Instagram and YouTube Shorts",
+            "bio": "I create viral and aesthetic reels with transitions, sync, and captions.",
+            "proposal": "Hi, I’d love to edit your reels! I’ll deliver fast and trendy content to grow your page.",
+            "tags": ["Video Editing", "Reels", "CapCut"]
         }
     else:
         gig = {
@@ -179,13 +170,10 @@ def generate_gig(input_text):
             "tags": ["Local Skill", "Freelance", "Hunarify"]
         }
 
-    return _add_cors_headers(jsonify(gig))
+    return jsonify(gig)
 
-@app.route('/download-pdf', methods=['POST', 'OPTIONS'])
+@app.route('/download-pdf', methods=['POST'])
 def download_pdf():
-    if request.method == 'OPTIONS':
-        return _add_cors_headers(jsonify({'message': 'CORS preflight'})), 200
-
     data = request.json
     gig = data.get("gig", {})
 
@@ -238,22 +226,19 @@ def download_pdf():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/send-whatsapp-job', methods=['POST', 'OPTIONS'])
+@app.route('/send-whatsapp-job', methods=['POST'])
 def send_whatsapp_job():
-    if request.method == 'OPTIONS':
-        return _add_cors_headers(jsonify({'message': 'CORS preflight'})), 200
-
     data = request.json
     gig = data.get("gig", {})
     message = f"New Job Match!\nTitle: {gig.get('title', 'Untitled')}\nBio: {gig.get('bio', 'No bio')}\nTags: {', '.join(gig.get('tags', []))}"
     print(f"WhatsApp Mock: {message}")
-    return _add_cors_headers(jsonify({"status": "success", "message": "Job sent to WhatsApp (mock)"}))
+    return jsonify({"status": "success", "message": "Job sent to WhatsApp (mock)"})
 
 @app.route("/post-job", methods=["POST"])
 def post_job():
     data = request.json
     print("Job Received:", data)
-    return jsonify({"message": "Job posted successfully!"}), 200
+    return jsonify({"message": "Job posted successfully!"})
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
